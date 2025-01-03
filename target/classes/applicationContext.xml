@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Bean for DBConnectionManager -->
+    <bean id="dbConnectionManager" class="com.itsc.OnlineBookstore.DBConnectionManager"/>
+
+    <!-- Bean for TaskRegistrationServlet -->
+    <bean id="BookRegistrationServlet" class="com.itsc.step7.BookRegistrationServlet">
+        <constructor-arg ref="dbConnectionManager"/>
+    </bean>
+    
+     <bean id="handlerMapping"
+          class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="urlMap">
+            <map>
+                <entry key="/registerBook" value="BookRegistrationServlet"/>
+            </map>
+        </property>
+    </bean>
+    
+    <context:component-scan base-package="com.itsc.OnlineBookstore"/>
+    
+     <aop:aspectj-autoproxy />
+</beans>
