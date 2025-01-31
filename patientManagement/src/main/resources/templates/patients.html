@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Patients</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body class="bg-light">
+    <div class="container mt-5">
+      <h1 class="text-center mb-4">Patient List</h1>
+
+      <div class="card p-4 shadow-sm">
+        <form th:action="@{/patients/add}" method="post" class="row g-3">
+          <div class="col-md-5">
+            <input
+              type="text"
+              name="name"
+              class="form-control"
+              placeholder="Patient Name"
+              required
+            />
+          </div>
+          <div class="col-md-3">
+            <input
+              type="number"
+              name="age"
+              class="form-control"
+              placeholder="Age"
+              required
+            />
+          </div>
+          <div class="col-md-4">
+            <button type="submit" class="btn btn-primary w-100">
+              Add Patient
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <table class="table table-hover mt-4 shadow-sm">
+        <thead class="table-dark">
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Records</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="patient : ${patients}">
+            <td th:text="${patient.name}"></td>
+            <td th:text="${patient.age}"></td>
+            <td th:text="${patient.getRecordCount()}"></td>
+            <td>
+              <a
+                th:href="@{/records/{id}(id=${patient.id})}"
+                class="btn btn-success btn-sm"
+                >View Records</a
+              >
+              <a
+                th:href="@{/patients/delete/{id}(id=${patient.id})}"
+                class="btn btn-danger btn-sm"
+                >Delete</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
